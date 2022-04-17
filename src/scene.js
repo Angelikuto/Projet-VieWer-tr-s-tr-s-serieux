@@ -8,7 +8,7 @@ class scene extends Phaser.Scene {
         this.load.image('tiles', 'assets/tilesets/platformPack_tilesheet.png');
 
         // Load the export Tiled JSON
-        this.load.tilemapTiledJSON('map', 'assets/tilemaps/Alpha1.json');
+        this.load.tilemapTiledJSON('map', 'assets/tilemaps/levelv1.json');
     }
 
 
@@ -19,12 +19,13 @@ class scene extends Phaser.Scene {
 
 
         const backgroundImage = this.add.image(0, 0, 'background').setOrigin(0, 0);
-        backgroundImage.setScale(1, 0.8);
+        backgroundImage.setScale(8, 10);
         const map = this.make.tilemap({key: 'map'});
 
-        const tileset = map.addTilesetImage('Alpha_test1', 'tiles');
-        this.platforms = map.createStaticLayer('Sol', tileset);
+        const tileset = map.addTilesetImage('platformPack_tilesheet', 'tiles');
+        this.platforms = map.createStaticLayer('Sol', tileset, 0,0);
 
+        this.platforms.setCollisionByProperty({collides:true});
         this.platforms.setCollisionByExclusion(-1, true);
         this.cursors = this.input.keyboard.createCursorKeys();
 
@@ -32,6 +33,7 @@ class scene extends Phaser.Scene {
         this.player = new Player(this)
 
         this.cameras.main.startFollow(this.player.player,false);
+
     }
 
 
