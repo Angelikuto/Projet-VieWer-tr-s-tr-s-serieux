@@ -4,10 +4,13 @@ class Player {
     constructor(scene) {
         this.scene=scene
         this.cameras=scene
-        this.player = this.scene.physics.add.sprite(50, 300, 'player');
+        this.player = this.scene.physics.add.sprite(294, 1052, 'player');
         this.player.setBounce(0.1);
-        this.player.setCollideWorldBounds(false);
-        this.scene.physics.add.collider(this.player, this.scene.platforms);
+        this.scene.physics.add.collider(this.player, this.scene.colliders);
+        this.cooldown=false
+        this.ennemy = this.scene.physics.add.sprite(400, 1052, 'player');
+        this.scene.physics.add.collider(this.ennemy, this.scene.colliders);
+
 
         this.scene.anims.create({
             key: 'walk',
@@ -33,6 +36,29 @@ class Player {
 
         });
     }
+    jappement(){
+
+        if(this.cooldown===false) {
+            let circle = this.scene.add.circle(this.player.x, this.player.y, 150);
+            circle = this.scene.physics.add.existing(circle, true)
+            this.cooldown=true
+
+            this.scene.physics.add.overlap(circle, this.ennemy,this.test,null,this);
+
+            this.scene.time.delayedCall(2000, () => {
+                this.cooldown=false
+                circle.destroy()
+                console.log(this.cooldown)
+            })
+        }
+
+    }
+
+    test(circle,ennemy){
+        ennemy.destroy()
+        console.log("je collide")
+    }
+
 
     jump(){
         this.player.setVelocityY(-420);
