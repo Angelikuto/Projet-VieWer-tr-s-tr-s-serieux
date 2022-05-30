@@ -5,7 +5,7 @@ class scene extends Phaser.Scene {
         this.load.image('spike', 'assets/images/spike.png');
         // At last image must be loaded with its JSON
         this.load.atlas('player', 'assets/images/kenney_player.png', 'assets/images/kenney_player_atlas.json');
-        this.load.image('tiles', 'assets/tilesets/platformPack_tilesheet.png');
+        this.load.image('tiles', 'assets/tilesets/tileset_asset.png');
 
         // Load the export Tiled JSON
         this.load.tilemapTiledJSON('map', 'assets/tilemaps/levelv1.json');
@@ -22,8 +22,11 @@ class scene extends Phaser.Scene {
         backgroundImage.setScale(8, 10);
         const map = this.make.tilemap({key: 'map'});
 
-        const tileset = map.addTilesetImage('platformPack_tilesheet', 'tiles');
-        this.platforms = map.createStaticLayer('Sol', tileset, 0,0).setOrigin(0,0);
+        const tileset = map.addTilesetImage('tileset_asset', 'tiles');
+        this.platforms = map.createStaticLayer('Sol1', tileset, 0,0).setOrigin(0,0);
+        this.platforms2 = map.createStaticLayer('Sol2', tileset, 0,0).setOrigin(0,0);
+        this.platforms3 = map.createStaticLayer('Sol3', tileset, 0,0).setOrigin(0,0);
+        this.platforms4 = map.createStaticLayer('Arbre', tileset, 0,0).setOrigin(0,0);
 
         this.cursors = this.input.keyboard.createCursorKeys();
 
