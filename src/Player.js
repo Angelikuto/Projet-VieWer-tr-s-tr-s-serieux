@@ -4,35 +4,47 @@ class Player {
     constructor(scene) {
         this.scene=scene
         this.cameras=scene
-        this.player = this.scene.physics.add.sprite(294, 1052, 'player');
+        this.player = this.scene.physics.add.sprite(294, 1052, 'marche1');
+        this.player.setScale(0.2)
         this.player.setBounce(0.1);
         this.scene.physics.add.collider(this.player, this.scene.colliders);
         this.cooldown=false
-        this.ennemy = this.scene.physics.add.sprite(400, 1052, 'player');
-        this.scene.physics.add.collider(this.ennemy, this.scene.colliders);
+
 
 
         this.scene.anims.create({
             key: 'walk',
-            frames: this.scene.anims.generateFrameNames('player', {
-                prefix: 'robo_player_',
-                start: 2,
-                end: 3,
-            }),
-            frameRate: 10,
-            repeat: -1
-        });
+            frames: [
+                {key:'marche1'},
+                {key:'marche2'},
+                {key:'marche3'},
+                {key:'marche4'},
+            ],
+            frameRate: 4,
+            repeat: -1});
+
+
         this.scene.anims.create({
             key: 'idle',
-            frames: [{key: 'player', frame: 'robo_player_0'}],
-            frameRate: 10,
+            frames: [
+                {key:'marche1'},
+                {key:'marche3'},
+            ],
+
+            frameRate: 2,
+            repeat: -1
 
         });
+
         this.scene.anims.create({
             key: 'jump',
-            frames: [{key: 'player', frame: 'robo_player_1'}],
-            frameRate: 10,
-            repeat:-1,
+            frames: [
+                {key:'marche2'},
+                {key:'marche2'},
+            ],
+
+            frameRate: 2,
+            repeat: -1
 
         });
     }
@@ -43,7 +55,8 @@ class Player {
             circle = this.scene.physics.add.existing(circle, true)
             this.cooldown=true
 
-            this.scene.physics.add.overlap(circle, this.ennemy,this.test,null,this);
+            this.scene.physics.add.overlap(circle, this.scene.Ours,this.test,null,this);
+            this.scene.physics.add.overlap(circle, this.scene.Faon,this.test2,null,this);
 
             this.scene.time.delayedCall(2000, () => {
                 this.cooldown=false
@@ -54,8 +67,13 @@ class Player {
 
     }
 
-    test(circle,ennemy){
-        ennemy.destroy()
+    test(circle,ours){
+        ours.play('ours',true)
+        console.log("je collide")
+    }
+
+    test2(circle,faon){
+        faon.play('faon',true)
         console.log("je collide")
     }
 
@@ -65,16 +83,18 @@ class Player {
         this.player.play('jump', true);
     }
     moveRight(){
-        this.player.setVelocityX(300);
+        this.player.setVelocityX(250);
         this.player.setFlipX(false);
         if (this.player.body.onFloor()) {
             this.player.play('walk', true)}
+        this.player.setScale(0.2)
     }
     moveLeft(){
-        this.player.setVelocityX(-300);
+        this.player.setVelocityX(-250);
         if (this.player.body.onFloor()) {
             this.player.play('walk', true)}
         this.player.setFlipX(true);
+        this.player.setScale(0.2)
     }
     stop(){
         this.player.setVelocityX(0);
