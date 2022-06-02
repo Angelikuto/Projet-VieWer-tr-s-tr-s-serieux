@@ -39,6 +39,8 @@ class scene extends Phaser.Scene {
         this.platforms2 = map.createStaticLayer('Sol2', tileset, 0,0).setOrigin(0,0);
         this.platforms3 = map.createStaticLayer('Sol3', tileset, 0,0).setOrigin(0,0);
         this.platforms4 = map.createStaticLayer('Arbre', tileset, 0,0).setOrigin(0,0);
+        this.platforms4 = map.createStaticLayer('Arbre2', tileset, 0,0).setOrigin(0,0);
+        this.platforms4 = map.createStaticLayer('Fleur1', tileset, 0,0).setOrigin(0,0);
 
 
 
