@@ -4,7 +4,7 @@ class Player {
     constructor(scene) {
         this.scene=scene
         this.cameras=scene
-        this.player = this.scene.physics.add.sprite(294, 1052, 'marche1');
+        this.player = this.scene.physics.add.sprite(700, 1075, 'marche1');
         this.player.setScale(0.2)
         this.player.setBounce(0.1);
         this.scene.physics.add.collider(this.player, this.scene.colliders);
@@ -49,20 +49,21 @@ class Player {
         });
     }
     jappement(){
+        if(this.scene.dontmove === true) {
+            if (this.cooldown === false) {
+                let circle = this.scene.add.circle(this.player.x, this.player.y, 150);
+                circle = this.scene.physics.add.existing(circle, true)
+                this.cooldown = true
 
-        if(this.cooldown===false) {
-            let circle = this.scene.add.circle(this.player.x, this.player.y, 150);
-            circle = this.scene.physics.add.existing(circle, true)
-            this.cooldown=true
+                this.scene.physics.add.overlap(circle, this.scene.Ours, this.test, null, this);
+                this.scene.physics.add.overlap(circle, this.scene.Faon, this.test2, null, this);
 
-            this.scene.physics.add.overlap(circle, this.scene.Ours,this.test,null,this);
-            this.scene.physics.add.overlap(circle, this.scene.Faon,this.test2,null,this);
-
-            this.scene.time.delayedCall(2000, () => {
-                this.cooldown=false
-                circle.destroy()
-                console.log(this.cooldown)
-            })
+                this.scene.time.delayedCall(2000, () => {
+                    this.cooldown = false
+                    circle.destroy()
+                    console.log(this.cooldown)
+                })
+            }
         }
 
     }
@@ -79,22 +80,30 @@ class Player {
 
 
     jump(){
-        this.player.setVelocityY(-420);
-        this.player.play('jump', true);
+        if(this.scene.dontmove === true) {
+            this.player.setVelocityY(-420);
+            this.player.play('jump', true);
+        }
     }
     moveRight(){
-        this.player.setVelocityX(250);
-        this.player.setFlipX(false);
-        if (this.player.body.onFloor()) {
-            this.player.play('walk', true)}
-        this.player.setScale(0.2)
+        if(this.scene.dontmove === true) {
+            this.player.setVelocityX(250);
+            this.player.setFlipX(false);
+            if (this.player.body.onFloor()) {
+                this.player.play('walk', true)
+            }
+            this.player.setScale(0.2)
+        }
     }
     moveLeft(){
-        this.player.setVelocityX(-250);
-        if (this.player.body.onFloor()) {
-            this.player.play('walk', true)}
-        this.player.setFlipX(true);
-        this.player.setScale(0.2)
+        if(this.scene.dontmove === true) {
+            this.player.setVelocityX(-250);
+            if (this.player.body.onFloor()) {
+                this.player.play('walk', true)
+            }
+            this.player.setFlipX(true);
+            this.player.setScale(0.2)
+        }
     }
     stop(){
         this.player.setVelocityX(0);

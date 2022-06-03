@@ -1,6 +1,12 @@
 class scene extends Phaser.Scene {
 
+    constructor (){
+        super("playGame")
+    }
+
+
     preload() {
+        this.load.image('menu', 'assets/images/menu.png');
         this.load.image('background', 'assets/images/ciel.png');
         this.load.image('spike', 'assets/images/spike.png');
         // At last image must be loaded with its JSON
@@ -29,12 +35,14 @@ class scene extends Phaser.Scene {
 
     create() {
 
+        this.dontmove = false;
 
         const backgroundImage = this.add.image(-600, -6800, 'background').setOrigin(0, 0);
         backgroundImage.setScale(8, 10);
         const map = this.make.tilemap({key: 'map'});
 
         const tileset = map.addTilesetImage('tileset_asset', 'tiles');
+
         this.platforms = map.createStaticLayer('Plat1', tileset, 0,0).setOrigin(0,0);
         this.platforms2 = map.createStaticLayer('Sol', tileset, 0,0).setOrigin(0,0);
         this.platforms3 = map.createStaticLayer('PlatV', tileset, 0,0).setOrigin(0,0);
@@ -50,6 +58,7 @@ class scene extends Phaser.Scene {
         this.platforms7 = map.createStaticLayer('Fleur1', tileset, 0,0).setOrigin(0,0);
         this.platforms8 = map.createStaticLayer('Fleur2', tileset, 0,0).setOrigin(0,0);
         this.platforms8 = map.createStaticLayer('Fleur1p', tileset, 0,0).setOrigin(0,0);
+        this.platforms9 = map.createStaticLayer('PlatA', tileset, 0,0).setOrigin(0,0);
 
 
 
@@ -112,7 +121,7 @@ class scene extends Phaser.Scene {
 
         map.getObjectLayer('Ours').objects.forEach((Ours) => {
             const O1 = this.Ours.create(Ours.x, Ours.y, 'ododo').setOrigin(0);
-            O1.setScale(0.3)
+            O1.setScale(0.4)
             O1.body.setSize(50,50).setOffset(75,150);
         });
 
@@ -134,6 +143,7 @@ class scene extends Phaser.Scene {
     //reste à la fin
         this.player = new Player(this)
         this.cameras.main.startFollow(this.player.player,true);
+        this.ui = this.add.image(-75, 693, 'menu').setOrigin(0, 0);
     }
 
     ReveilF(circle,Faon){
@@ -162,9 +172,13 @@ class scene extends Phaser.Scene {
                 break;
             default:
                 this.player.stop();
-            console.log(this.player.player.x)
-            console.log(this.player.player.y)
+
         }
+
+        this.input.keyboard.on('keydown-ENTER', function () {
+            this.ui.setVisible(false);
+            this.dontmove = true;
+        }, this);
 
         this.player.player.body.setSize(200,750)
 
