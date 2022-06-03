@@ -35,16 +35,29 @@ class scene extends Phaser.Scene {
         const map = this.make.tilemap({key: 'map'});
 
         const tileset = map.addTilesetImage('tileset_asset', 'tiles');
-        this.platforms = map.createStaticLayer('Sol1', tileset, 0,0).setOrigin(0,0);
-        this.platforms2 = map.createStaticLayer('Sol2', tileset, 0,0).setOrigin(0,0);
-        this.platforms3 = map.createStaticLayer('Sol3', tileset, 0,0).setOrigin(0,0);
+        this.platforms = map.createStaticLayer('Plat1', tileset, 0,0).setOrigin(0,0);
+        this.platforms2 = map.createStaticLayer('Sol', tileset, 0,0).setOrigin(0,0);
+        this.platforms3 = map.createStaticLayer('PlatV', tileset, 0,0).setOrigin(0,0);
         this.platforms4 = map.createStaticLayer('Arbre', tileset, 0,0).setOrigin(0,0);
-        this.platforms4 = map.createStaticLayer('Arbre2', tileset, 0,0).setOrigin(0,0);
-        this.platforms4 = map.createStaticLayer('Fleur1', tileset, 0,0).setOrigin(0,0);
+        this.platforms5 = map.createStaticLayer('Arbre2', tileset, 0,0).setOrigin(0,0);
+        this.platforms6 = map.createStaticLayer('ArbreP', tileset, 0,0).setOrigin(0,0);
+        this.platforms11 = map.createStaticLayer('ArbreFond', tileset, 0,0).setOrigin(0,0);
+        this.platforms11 = map.createStaticLayer('ArbreFond2', tileset, 0,0).setOrigin(0,0);
+        this.platforms11 = map.createStaticLayer('ArbreFond3', tileset, 0,0).setOrigin(0,0);
+        this.platforms9 = map.createStaticLayer('Buisson1', tileset, 0,0).setOrigin(0,0);
+        this.platforms10 = map.createStaticLayer('Buisson2', tileset, 0,0).setOrigin(0,0);
+        this.platforms11 = map.createStaticLayer('Buisson3', tileset, 0,0).setOrigin(0,0);
+        this.platforms7 = map.createStaticLayer('Fleur1', tileset, 0,0).setOrigin(0,0);
+        this.platforms8 = map.createStaticLayer('Fleur2', tileset, 0,0).setOrigin(0,0);
+        this.platforms8 = map.createStaticLayer('Fleur1p', tileset, 0,0).setOrigin(0,0);
 
 
 
-            //animations
+
+
+
+
+        //animations
 
         this.anims.create({
             key: 'faon',
@@ -88,7 +101,7 @@ class scene extends Phaser.Scene {
 
         map.getObjectLayer('Faon').objects.forEach((Faon) => {
             const F1 = this.Faon.create(Faon.x, Faon.y, 'fdodo').setOrigin(0);
-            F1.setScale(0.5)
+            F1.setScale(0.3)
             F1.body.setSize(50,50).setOffset(75,150);
         });
 
@@ -99,7 +112,7 @@ class scene extends Phaser.Scene {
 
         map.getObjectLayer('Ours').objects.forEach((Ours) => {
             const O1 = this.Ours.create(Ours.x, Ours.y, 'ododo').setOrigin(0);
-            O1.setScale(0.5)
+            O1.setScale(0.3)
             O1.body.setSize(50,50).setOffset(75,150);
         });
 
